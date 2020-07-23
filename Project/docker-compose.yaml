@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  receiver:
+    build: receiver/
+    image: receiver
+    networks:
+      - xmlnet
+    volumes:
+      - ./receiver/received_files:/receiver/received_files
+  sender:
+    build: sender/
+    image: sender
+    depends_on: 
+     - receiver
+    networks:
+      - xmlnet
+    ports:
+    - "8000:8000" 
+    environment:
+    - ADDRESS=project_receiver_1
+    - PORT=8001
+networks:
+  xmlnet:
+    driver: bridge
