@@ -36,7 +36,6 @@ def load_file(filename):
         f.close()
 
         symkey = read_sym_key()
-        print(symkey)
         cipher = Fernet(symkey)
         encrypted = cipher.encrypt(message)
         requests.post('http://' + os.environ['ADDRESS'] + ':' + os.environ["PORT"], data=encrypted, headers = {"FILENAME": filename})
